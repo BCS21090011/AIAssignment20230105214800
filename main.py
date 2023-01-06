@@ -164,7 +164,7 @@ def BrowseFileButton_OnClick():
 
     fileName: str = filedialog.askopenfilename(title="Select a hospital data file (.csv)", filetypes=[("CSV files", "*.csv*")])
 
-    if fileName == "":
+    if fileName == '':
         fileValid = False
     else:
         de = ProcessDataset(fileName)
@@ -233,24 +233,13 @@ def ValidEntryValIntNonNeg(userInput: str)->bool:
 
     return valid
 
-def HosptValidEntry(userInput: str)->bool:
-    valid: bool = ValidEntryValIntNonNeg(userInput)
-
-    if ValidStrInputIsIntNonNeg(userInput) == True:
-        inputVal: int = int(userInput)
-
-        if ((inputVal < 1) | (inputVal > 6)) == True:
-            valid = False
-
-    return valid
-
 def CustomEntry(root, validateCommand, entryDefaultVal: str=None)->tk.Entry:
     entry: tk.Entry = tk.Entry(root, justify="center")
     entry.config(validate="key", validatecommand=(entry.register(validateCommand), '%P'))
+    entryTxtVar: tk.StringVar = tk.StringVar(root)
 
     if entryDefaultVal != None:
         if validateCommand(entryDefaultVal) == True:
-            entryTxtVar: tk.StringVar = tk.StringVar(root)
             entryTxtVar.set(entryDefaultVal)
             entry.config(textvariable=entryTxtVar)
 
@@ -280,7 +269,7 @@ BrowseFileButton.pack()
 
 HosptLabel: tk.Label = tk.Label(root, text= "Hospital ID:", justify="center")
 HosptLabel.pack()
-HosptEntry: tk.Entry = CustomEntry(root, HosptValidEntry)
+HosptEntry: tk.Entry = CustomEntry(root, ValidEntryValIntNonNeg)
 HosptEntry.pack()
 
 AcuteTLabel: tk.Label = tk.Label(root, text="Depressed Time (days):", justify="center")
