@@ -101,10 +101,20 @@ from PIL import ImageTk, Image
 
 fileValid: bool = False
 inputsValid: bool = False
-TreatColVals: list[str] = [None]
+TreatColVals: list[str] = ["Nothing"]
 de: ProcessDataset
 
+def ValidLabelOutput(lbl: tk.Label, valid: bool, oriText: str, invalidText: str=None):
+    if valid == True:
+        lbl["text"] = oriText
+    else:
+        if invalidText == None:
+            lbl["text"] = oriText + "\t[Invalid]"
+        else:
+            lbl["text"] = invalidText
+
 def PredButton_OnClick():
+    ValidLabelOutput(BrowseFileLabel, fileValid, "Browse file")
     if fileValid == True:
         HosptValStr: str = HosptEntry.get()
         AcuteTValStr: str = AcuteTEntry.get()
@@ -114,12 +124,12 @@ def PredButton_OnClick():
         HosptValValid: bool = ValidStrInputIsIntNonNeg(HosptValStr)
         AcuteTValValid: bool = ValidStrInputIsIntNonNeg(AcuteTValStr)
         AgeValValid: bool = ValidStrInputIsIntNonNeg(AgeValStr)
-        GenderValValid: bool = False
 
-        if GenderValStr in genderVals:
-            GenderValValid = True
+        ValidLabelOutput(HosptLabel, HosptValValid, "Hospital ID:")
+        ValidLabelOutput(AcuteTLabel, AcuteTValValid, "Depressed Time (days):")
+        ValidLabelOutput(AgeLabel, AgeValValid, "Age:")
 
-        if all([HosptValValid, AcuteTValValid, AgeValValid, GenderValValid]) == True:
+        if all([HosptValValid, AcuteTValValid, AgeValValid]) == True:
             global inputsValid
             inputsValid = True
 
