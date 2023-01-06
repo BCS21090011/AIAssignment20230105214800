@@ -1,6 +1,5 @@
 import pandas as pd
 from pandas.api.types import is_numeric_dtype
-import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
@@ -70,7 +69,7 @@ class ProcessDataset():
         self.CM: confusion_matrix = confusion_matrix(self.ytst, self.yPred)
 
     def DropUnneededCols(self):
-        unNeededBoolArray: np.ndarray = ~(self.OriData.columns.isin(self.ColsNeeded))
+        unNeededBoolArray = ~(self.OriData.columns.isin(self.ColsNeeded))
         self.Data: pd.DataFrame = self.OriData.drop(self.OriData.columns[unNeededBoolArray], axis=1)
 
     def Predict(self, inputs: list)->int:
