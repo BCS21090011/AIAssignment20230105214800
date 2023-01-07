@@ -104,7 +104,6 @@ from PIL import ImageTk, Image
 fileValid = False
 inputsValid = False
 TreatColVals = ["Nothing"]
-de: ProcessDataset
 
 def ValidLabelOutput(lbl, valid, oriText, invalidText=None):
     if valid == True:
@@ -166,6 +165,7 @@ def BrowseFileButton_OnClick():
 
     fileName = filedialog.askopenfilename(title="Select a hospital data file (.csv)", filetypes=[("CSV files", "*.csv*")])
     BrowseFileAccuracyLabel["text"] = ''
+    ResetOptionMenuOptions(TreatOptMenu, TreatStrVar, ["Nothing"])
     DiagramPanel.config(image=None)
     DiagramPanel.image = None
 
