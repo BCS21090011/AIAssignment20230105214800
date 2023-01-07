@@ -5,6 +5,7 @@ from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
 import seaborn as sbrn
 
 class ProcessDataset():
@@ -66,6 +67,7 @@ class ProcessDataset():
 
         # Confusion matrix:
         self.yPred = self.Classifier.predict(self.Xtst)
+        self.PredAccuracy = accuracy_score(self.ytst, self.yPred)
         self.CM = confusion_matrix(self.ytst, self.yPred)
 
     def DropUnneededCols(self):
@@ -163,6 +165,9 @@ def BrowseFileButton_OnClick():
     global de
 
     fileName = filedialog.askopenfilename(title="Select a hospital data file (.csv)", filetypes=[("CSV files", "*.csv*")])
+    BrowseFileAccuracyLabel["text"] = ''
+    DiagramPanel.config(image=None)
+    DiagramPanel.image = None
 
     if fileName == '':
         fileValid = False
@@ -172,6 +177,7 @@ def BrowseFileButton_OnClick():
         if de.FileValid == True:
             global TreatColVals
             TreatColVals = de.TreatColDum.columns.tolist()
+            BrowseFileAccuracyLabel["text"] = f"Prediction accuracy: {de.PredAccuracy * 100:^8} %"
 
             ResetOptionMenuOptions(TreatOptMenu, TreatStrVar, TreatColVals)
 
@@ -268,6 +274,8 @@ root.grid_columnconfigure((0, 1, 2), weight=1)
 
 BrowseFileLabel = tk.Label(root, text="Browse file", justify="center")
 BrowseFileLabel.grid(column=0, row=0)
+BrowseFileAccuracyLabel = tk.Label(root, justify="center")
+BrowseFileAccuracyLabel.grid(column=1, row=0)
 BrowseFileButton = tk.Button(root, text="Browse file", command=BrowseFileButton_OnClick)
 BrowseFileButton.grid(column=2, row=0)
 
