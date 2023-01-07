@@ -62,7 +62,7 @@ class ProcessDataset():
         self.Xtrn, self.Xtst, self.ytrn, self.ytst = train_test_split(self.X, self.y, test_size=0.25, random_state=0)
 
         # Setting decision tree:
-        self.Classifier = DecisionTreeClassifier(criterion="entropy", random_state=0)
+        self.Classifier = DecisionTreeClassifier(criterion="gini", random_state=0)
         self.Classifier.fit(self.Xtrn, self.ytrn)
 
         # Confusion matrix:
