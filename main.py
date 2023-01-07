@@ -182,12 +182,14 @@ def BrowseFileButton_OnClick():
             DiagramPanel.config(image=photo)
             DiagramPanel.image = photo
 
+    ValidLabelOutput(BrowseFileLabel, fileValid, "Browse file")
+
 def ResetOptionMenuOptions(optMenu: tk.OptionMenu, strVar: tk.StringVar, newOptions: list[str], defaultValIndex: int=None):
     menu = optMenu["menu"]
     menu.delete(0, "end")
 
-    for name in newOptions:
-        menu.add_command(label=name, command=tk._setit(strVar, name))
+    for opt in newOptions:
+        menu.add_command(label=opt, command=tk._setit(strVar, opt))
 
     if defaultValIndex == None:
         defaultValIndex = 0
@@ -261,42 +263,44 @@ def CustomOptionMenu(root, options: list[str], defaultValIndex: int=None)->(tk.O
 root: tk.Tk = tk.Tk()
 root.title("Depression Treatment Prediction")
 root.geometry("800x700")
+root.grid_rowconfigure((0, 1, 2, 3, 4, 5, 6, 7, 8, 9), weight=0)
+root.grid_columnconfigure((0, 1, 2), weight=1)
 
 BrowseFileLabel: tk.Label = tk.Label(root, text="Browse file", justify="center")
-BrowseFileLabel.pack()
+BrowseFileLabel.grid(column=0, row=0)
 BrowseFileButton: tk.Button = tk.Button(root, text="Browse file", command=BrowseFileButton_OnClick)
-BrowseFileButton.pack()
+BrowseFileButton.grid(column=2, row=0)
 
 HosptLabel: tk.Label = tk.Label(root, text= "Hospital ID:", justify="center")
-HosptLabel.pack()
+HosptLabel.grid(column=0, row=1)
 HosptEntry: tk.Entry = CustomEntry(root, ValidEntryValIntNonNeg)
-HosptEntry.pack()
+HosptEntry.grid(column=2, row=1)
 
 AcuteTLabel: tk.Label = tk.Label(root, text="Depressed Time (days):", justify="center")
-AcuteTLabel.pack()
+AcuteTLabel.grid(column=0, row=2)
 AcuteTEntry: tk.Entry = CustomEntry(root, ValidEntryValIntNonNeg, "0")
-AcuteTEntry.pack()
+AcuteTEntry.grid(column=2, row=2)
 
 AgeLabel: tk.Label = tk.Label(root, text="Age:", justify="center")
-AgeLabel.pack()
+AgeLabel.grid(column=0, row=3)
 AgeEntry: tk.Entry = CustomEntry(root, ValidEntryValIntNonNeg)
-AgeEntry.pack()
+AgeEntry.grid(column=2, row=3)
 
 GenderLabel: tk.Label = tk.Label(root, text="Gender:", justify="center")
-GenderLabel.pack()
+GenderLabel.grid(column=0, row=4)
 genderVals: list[str] = ["Male", "Female"]
 GenderOptMenu, GenderStrVar = CustomOptionMenu(root, genderVals)
-GenderOptMenu.pack()
+GenderOptMenu.grid(column=2, row=4)
 
 TreatLabel: tk.Label = tk.Label(root, text="Treat:", justify="center")
-TreatLabel.pack()
+TreatLabel.grid(column=0, row=5)
 TreatOptMenu, TreatStrVar = CustomOptionMenu(root, TreatColVals)
-TreatOptMenu.pack()
+TreatOptMenu.grid(column=2, row=5)
 
 PredButton: tk.Button = tk.Button(root, text="Predict", command=PredButton_OnClick)
-PredButton.pack()
+PredButton.grid(column=1, row=6)
 
 DiagramPanel: tk.Label = tk.Label(root)
-DiagramPanel.pack()
+DiagramPanel.grid(column=0, columnspan=3, row=7, rowspan=3)
 
 root.mainloop()
