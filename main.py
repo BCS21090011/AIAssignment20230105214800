@@ -19,7 +19,7 @@ class ProcessDataset():
         if self.FileValid == True:
             self.Process()
 
-    def ValidataFile(self)->bool:
+    def ValidataFile(self):
         self.FileValid = False
 
         if set(self.ColsNeeded).issubset(self.OriData.columns):
